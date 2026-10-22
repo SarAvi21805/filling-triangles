@@ -1,0 +1,5 @@
+# Ejecutables
+renderer.exe
+
+# Carpeta de los fuentes de Raylib 
+raylib_src/

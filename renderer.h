@@ -1,28 +1,26 @@
-// Estructuras base del Pipeline
+#ifndef RENDERER_H
+#define RENDERER_H
 
+// Estructuras base del Pipeline
 #pragma once
 #include <raylib.h>
+
+typedef enum {
+    TRIANGLE_MODE_WIREFRAME,
+    TRIANGLE_MODE_BARYCENTRIC,
+    TRIANGLE_MODE_SCANLINE
+} TriangleMode;
 
 // Estructura para representar un vértice en el espacio
 typedef struct {
     Vector3 position; // Posición (x, y, z)
-    Vector2 uv; // Coordenadas de textura
-    Vector3 normal; // Normal para iluminación
     Color color; // Color base del vértice
 } Vertex;
 
-// Estructura para los fragmentos
-typedef struct {
-    int x;
-    int y;
-    Color color;
-    float depth;
-} Fragment;
+// Prototipos de funciones
+void rasterize_triangle(Vertex v0, Vertex v1, Vertex v2, TriangleMode mode, Color* framebuffer, float* zbuffer, int screenWidth, int screenHeight);
+void draw_wireframe(Vertex v0, Vertex v1, Vertex v2, Color* framebuffer, int screenWidth, int screenHeight);
+void rasterize_barycentric(Vertex v0, Vertex v1, Vertex v2, Color* framebuffer, float* zbuffer, int screenWidth, int screenHeight);
+void rasterize_scanline(Vertex v0, Vertex v1, Vertex v2, Color* framebuffer, float* zbuffer, int screenWidth, int screenHeight);
 
-// Uniforms para pasar matrices o parámetros globales
-typedef struct {
-    Matrix modelMatrix;
-    Matrix viewMatrix;
-    Matrix projectionMatrix;
-    Color currentColor;
-} Uniforms;
+#endif
